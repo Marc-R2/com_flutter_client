@@ -1,5 +1,9 @@
 library com_flutter_client;
 
+export 'package:com/com_client.dart';
+
+
+
 /// A Calculator.
 class Calculator {
   /// Returns [value] plus 1.

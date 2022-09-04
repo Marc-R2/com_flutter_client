@@ -1,13 +1,19 @@
 name: com_flutter_client
 description: A new Flutter project.
 version: 0.0.1
-homepage:
+# homepage:
+
+publish_to: none
 
 environment:
   sdk: '>=2.18.0-271.7.beta <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
+  com:
+    path: ../com
+    # git:
+    #   url: https://github.com/Marc-R2/com.git
   flutter:
     sdk: flutter
 
