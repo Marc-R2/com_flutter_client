@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 'Reset (Test)',
               ),
             ),
-            const Expanded(child: LogConsole()),
+            const Expanded(child: InteractiveConsole()),
           ],
         ),
       ),

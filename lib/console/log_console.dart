@@ -1,17 +1,20 @@
 part of '../com_flutter_client.dart';
 
-class LogConsole extends StatefulWidget {
-  const LogConsole({Key? key}) : super(key: key);
+class LogConsole extends StatelessWidget {
+  const LogConsole({
+    this.showTrace = false,
+    this.showDebug = false,
+    this.showInfo = true,
+    this.showWarning = true,
+    this.showError = true,
+    super.key,
+  });
 
-  @override
-  State<LogConsole> createState() => _LogConsoleState();
-}
-
-class _LogConsoleState extends State<LogConsole> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  final bool showTrace;
+  final bool showDebug;
+  final bool showInfo;
+  final bool showWarning;
+  final bool showError;
 
   Color? _color(int type) {
     switch (type) {
@@ -25,6 +28,14 @@ class _LogConsoleState extends State<LogConsole> {
     return null;
   }
 
+  bool filter(Message message) {
+    if (message.type == 0 && !showTrace && !showDebug) return false;
+    if (message.type == 1 && !showInfo) return false;
+    if (message.type == 2 && !showWarning) return false;
+    if (message.type == 3 && !showError) return false;
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -36,7 +47,7 @@ class _LogConsoleState extends State<LogConsole> {
           itemCount: Logger.messages.length,
           itemBuilder: (context, index) {
             final message = Logger.messages[keys[length - index - 1]];
-            if (message == null) return const SizedBox();
+            if (message == null || !filter(message)) return const SizedBox();
             return Card(
               color: _color(message.type),
               child: ListTile(
