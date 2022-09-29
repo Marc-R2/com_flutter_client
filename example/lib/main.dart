@@ -1,7 +1,9 @@
+import 'package:example/service/provider/service_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:com_flutter_client/com_flutter_client.dart';
 
 void main() {
+  Message.info(title: 'App is starting');
   runApp(const MyApp());
 }
 
@@ -33,6 +35,33 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  /// Assign via [com] or remember to connect the client before using it.
+  late ComSocket _com;
+
+  ComSocket get com {
+    if (!_com.ready) _initClient();
+    return _com;
+  }
+
+  set com(ComSocket com) {
+    _com = com;
+    _initClient();
+  }
+
+  void _initClient() {
+    _com.init().then((value) async {
+      await _com.connectClient();
+    });
+  }
+
+  @override
+  void initState() {
+    com = ComSocket.fromIP(ip: '192.168.178.132', port: 7000);
+    super.initState();
+  }
+
+  PingService get ping => PingService(com: com);
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -61,15 +90,22 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: Logger.messages.length,
-                itemBuilder: (context, index) {
-                  final msgs = Logger.messages.values.toList().reversed;
-                  final message = msgs.elementAt(index);
-                  return Text(message.toString());
-                },
+            TextButton(
+              onPressed: () async {
+                final ms = await ping.ping
+                    .request(
+                      fields: [ping.ping.wait],
+                      data: {'wait': 4096},
+                    )
+                    .values
+                    .first;
+              },
+              child: const Text(
+                'Reset (Test)',
               ),
+            ),
+            const Expanded(
+              child: LogConsole(),
             ),
           ],
         ),
@@ -79,6 +115,42 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class LogConsole extends StatefulWidget {
+  const LogConsole({Key? key}) : super(key: key);
+
+  @override
+  State<LogConsole> createState() => _LogConsoleState();
+}
+
+class _LogConsoleState extends State<LogConsole> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: Logger().stream,
+      builder: (context, snapshot) {
+        final keys = Logger.messages.keys;
+        final length = Logger.messages.length;
+        return ListView.builder(
+          itemCount: Logger.messages.length,
+          itemBuilder: (context, index) {
+            //final message = msgs[index];
+            final message = Logger.messages[keys.elementAt(length - index - 1)];
+            if(message == null) return const SizedBox();
+            return ListTile(
+              title: Text(message.title),
+            );
+          },
+        );
+      },
     );
   }
 }

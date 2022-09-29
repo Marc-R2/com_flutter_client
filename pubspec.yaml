@@ -10,10 +10,10 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  com:
-    path: ../com
+  com_client:
+    path: ../com_client
     # git:
-    #   url: https://github.com/Marc-R2/com.git
+    #   url: https://github.com/Marc-R2/com_client.git
   flutter:
     sdk: flutter
 

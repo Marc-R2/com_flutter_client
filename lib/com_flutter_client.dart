@@ -1,8 +1,6 @@
 library com_flutter_client;
 
-export 'package:com/com_client.dart';
-
-
+export 'package:com_client/com_client.dart';
 
 /// A Calculator.
 class Calculator {
