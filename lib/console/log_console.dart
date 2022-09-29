@@ -28,6 +28,18 @@ class LogConsole extends StatelessWidget {
     return null;
   }
 
+  Icon _icon(int type) {
+    switch (type) {
+      case 1:
+        return const Icon(Icons.info_outline);
+      case 2:
+        return const Icon(Icons.warning);
+      case 3:
+        return const Icon(Icons.error_outline);
+    }
+    return const Icon(Icons.info_outline);
+  }
+
   bool filter(Message message) {
     if (message.type == 0 && !showTrace && !showDebug) return false;
     if (message.type == 1 && !showInfo) return false;
@@ -43,16 +55,24 @@ class LogConsole extends StatelessWidget {
       builder: (context, snapshot) {
         final keys = Logger.messages.keys.toList();
         final length = Logger.messages.length;
+        int counter = 0;
         return ListView.builder(
-          itemCount: Logger.messages.length,
+          itemCount: length,
           itemBuilder: (context, index) {
             final message = Logger.messages[keys[length - index - 1]];
-            if (message == null || !filter(message)) return const SizedBox();
+            if (message == null || !filter(message)) {
+              if (counter == 0 && index + 1 >= length) {
+                return const Center(child: Text('Nothing to show here'));
+              }
+              return const SizedBox();
+            }
+            counter++;
             return Card(
               color: _color(message.type),
               child: ListTile(
                 title: Text(message.replaceTemplates(message.title)),
                 dense: true,
+                leading: _icon(message.type),
               ),
             );
           },

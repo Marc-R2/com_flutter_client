@@ -60,6 +60,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'eu.bitbot.example'
 }
 
 flutter {
