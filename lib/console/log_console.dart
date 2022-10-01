@@ -1,5 +1,15 @@
 part of '../com_flutter_client.dart';
 
+class LogConsolePage extends DynamicPage {
+  const LogConsolePage({super.key});
+
+  @override
+  Map<String, DynamicPage> get pages => {};
+
+  @override
+  Widget build(BuildContext context) => const LogConsole();
+}
+
 class LogConsole extends StatelessWidget {
   const LogConsole({
     this.showTrace = false,

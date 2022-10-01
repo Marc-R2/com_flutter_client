@@ -1,7 +1,12 @@
-import 'package:flutter/material.dart';
+part of '../com_flutter_client.dart';
 
-class Settings extends StatelessWidget {
+class Settings extends DynamicPage {
   const Settings({super.key});
+
+  @override
+  Map<String, DynamicPage> get pages => {
+        'console': const InteractiveConsolePage(),
+      };
 
   @override
   Widget build(BuildContext context) {

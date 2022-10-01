@@ -1,7 +1,10 @@
 part of '../com_flutter_client.dart';
 
-class LogMessagePage extends StatelessWidget {
+class LogMessagePage extends DynamicPage {
   const LogMessagePage({super.key});
+
+  @override
+  Map<String, DynamicPage> get pages => {};
 
   @override
   Widget build(BuildContext context) {

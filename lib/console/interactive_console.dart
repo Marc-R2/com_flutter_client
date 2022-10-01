@@ -1,5 +1,17 @@
 part of '../com_flutter_client.dart';
 
+class InteractiveConsolePage extends DynamicPage {
+  const InteractiveConsolePage({Key? key}) : super(key: key);
+
+  @override
+  Map<String, DynamicPage> get pages => {
+        ':message': const LogMessagePage(),
+      };
+
+  @override
+  Widget build(BuildContext context) => const InteractiveConsole();
+}
+
 class InteractiveConsole extends StatefulWidget {
   const InteractiveConsole({Key? key}) : super(key: key);
 

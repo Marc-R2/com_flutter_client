@@ -4,7 +4,6 @@ export 'package:com_client/com_client.dart';
 export 'package:beamer/beamer.dart';
 
 import 'package:com_flutter_client/com_flutter_client.dart';
-import 'package:com_flutter_client/settings/settings.dart';
 import 'package:com_flutter_client/util/pill_select.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +15,12 @@ part 'console/interactive_console.dart';
 
 part 'local/local_text.dart';
 
+part 'pages/dynamic_page.dart';
+
+part 'settings/settings.dart';
+
+part 'settings/settings_button.dart';
+
 /// A Calculator.
 class Calculator {
   /// Returns [value] plus 1.
@@ -23,47 +28,43 @@ class Calculator {
 }
 
 class COMApp extends StatelessWidget {
-  COMApp({
+  const COMApp({
     super.key,
     required this.homePage,
     this.errorPage,
+    this.initLang = 'en',
   });
 
-  final Widget homePage;
+  final DynamicPage homePage;
+
   final Widget? errorPage;
 
-  late final routerDelegate = BeamerDelegate(
-    initialPath: '/de',
-    notFoundPage: BeamPage(
-      key: const ValueKey('404'),
-      child: errorPage ??
-          const Scaffold(
-            body: Center(
-              child: Text('404 - Not Found'),
-            ),
-          ),
-    ),
-    locationBuilder: RoutesLocationBuilder(
-      routes: {
-        //'/': (context, state, data) => homePage,
-        '/:lang': (context, state, data) => homePage,
-        //'/settings': (context, state, data) => const Settings(key: ValueKey('/settings - langLess')),
-        '/:lang/settings': (context, state, data) => const Settings(),
-        //'/settings/console': (context, state, data) => const InteractiveConsole(key: ValueKey('/settings/console - langLess')),
-        '/:lang/settings/console': (context, state, data) =>
-            const InteractiveConsole(),
-        //'/settings/console/log': (context, state, data) => const LogConsole(key: ValueKey('/settings/console/log - langLess')),
-        '/:lang/settings/console/log': (context, state, data) =>
-            const LogConsole(),
-        //'/settings/console/log/:message': (context, state, data) => homePage,
-        '/:lang/settings/console/:message': (context, state, data) =>
-            const LogMessagePage(),
-      },
-    ),
-  );
+  final String initLang;
+
+  BeamerDelegate get routerDelegate {
+    final pages = <String, DynamicPage>{
+      'settings': const Settings(),
+    };
+
+    print('Home Page: $homePage');
+    print('Home Page Pages: $pages');
+
+    return BeamerDelegate(
+      initialPath: '/$initLang',
+      notFoundPage: BeamPage(
+        key: const ValueKey('404'),
+        child: errorPage ??
+            const Scaffold(body: Center(child: Text('404 - Not Found'))),
+      ),
+      locationBuilder: RoutesLocationBuilder(
+        routes: homePage.buildRoutes(pages),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final routerDelegate = this.routerDelegate;
     return MaterialApp.router(
       routeInformationParser: BeamerParser(),
       routerDelegate: routerDelegate,

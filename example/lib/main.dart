@@ -1,22 +1,31 @@
+import 'package:com_flutter_client/com_flutter_client.dart';
 import 'package:example/service/provider/service_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:com_flutter_client/com_flutter_client.dart';
 
 void main() {
   // Message.info(title: 'App is starting');
-  runApp(COMApp(
-    homePage: const MyHomePage(),
-  ));
+  runApp(const COMApp(homePage: MyHomePage()));
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends DynamicPage {
   const MyHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  get pages => {};
+
+  @override
+  Widget build(BuildContext context) => const MyHome();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHome extends StatefulWidget {
+  const MyHome({super.key});
+
+  @override
+  State<MyHome> createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
   int _counter = 0;
 
   /// Assign via [com] or remember to connect the client before using it.
@@ -62,6 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: const [
+          OpenSettingsIcon(),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: const Text('Test - Connection to COM'),
           ),
-          const Expanded(child: InteractiveConsole()),
+          // const Expanded(child: InteractiveConsole()),
         ],
       ),
       floatingActionButton: FloatingActionButton(
