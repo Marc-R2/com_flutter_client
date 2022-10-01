@@ -20,6 +20,7 @@ class Settings extends DynamicPage {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
+        actions: const [GoHomeIcon()],
       ),
       body: ListView.builder(
         itemCount: pages.length,

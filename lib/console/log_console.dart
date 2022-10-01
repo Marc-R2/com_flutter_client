@@ -27,10 +27,11 @@ class LogConsole extends StatelessWidget {
   final bool showError;
 
   bool filter(Message message) {
-    if (message.type == 0 && !showTrace && !showDebug) return false;
+    if (message.type == 0 && !showDebug) return false;
     if (message.type == 1 && !showInfo) return false;
     if (message.type == 2 && !showWarning) return false;
     if (message.type == 3 && !showError) return false;
+    if (message.type == 9 && !showTrace) return false;
     return true;
   }
 
@@ -83,6 +84,8 @@ extension MessageMaterial on Message {
         return Colors.orange;
       case 3:
         return Colors.red;
+      case 9:
+        return Colors.greenAccent;
     }
     return null;
   }
@@ -95,6 +98,8 @@ extension MessageMaterial on Message {
         return const Icon(Icons.warning);
       case 3:
         return const Icon(Icons.error_outline);
+      case 9:
+        return const Icon(Icons.bug_report);
     }
     return const Icon(Icons.info_outline);
   }

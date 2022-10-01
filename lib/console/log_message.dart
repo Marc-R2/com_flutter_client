@@ -10,6 +10,7 @@ class LogMessagePage extends DynamicPage {
   Widget build(BuildContext context) {
     final messageId =
         int.tryParse(context.beamState!.pathParameters['message']!) ?? 0;
+
     final message = Logger.messages[messageId];
 
     if (message == null) {
@@ -24,23 +25,24 @@ class LogMessagePage extends DynamicPage {
       appBar: AppBar(
         title: Text('Log Message - ${message.titleString}'),
         backgroundColor: message.color ?? Colors.green,
+        actions: const [GoHomeIcon()],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             message.titleString,
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 16),
           Text(
             message.textString,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 16),
           Text(
             message.time.toString(),
-            style: Theme.of(context).textTheme.caption,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 16),
           TextButton(

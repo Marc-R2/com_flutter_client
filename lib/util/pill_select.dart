@@ -5,6 +5,7 @@ class PillSelect extends StatelessWidget {
     super.key,
     this.selected = true,
     this.onChanged,
+    this.icon,
     this.child,
     this.color = Colors.blue,
     this.duration,
@@ -17,6 +18,7 @@ class PillSelect extends StatelessWidget {
   final Color color;
   final void Function(bool)? onChanged;
   final Widget? child;
+  final Widget? icon;
   final Duration? duration;
   final double radius;
   final EdgeInsets? innerPadding;
@@ -37,7 +39,16 @@ class PillSelect extends StatelessWidget {
             border: Border.all(color: color),
             borderRadius: BorderRadius.circular(radius),
           ),
-          child: child,
+          child: icon == null
+              ? child ?? const SizedBox()
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    icon!,
+                    if (child != null) const SizedBox(width: 4),
+                    if (child != null) child!,
+                  ],
+                ),
         ),
       ),
     );

@@ -40,6 +40,7 @@ class _InteractiveConsoleState extends State<InteractiveConsole> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Interactive Console'),
+        actions: const [GoHomeIcon()],
       ),
       body: Column(
         children: [
@@ -53,30 +54,35 @@ class _InteractiveConsoleState extends State<InteractiveConsole> {
                     selected: showTrace,
                     onChanged: (value) => setState(() => showTrace = value),
                     color: Colors.greenAccent,
+                    icon: const Icon(Icons.bug_report),
                     child: const Text('Trace'),
                   ),
                   PillSelect(
                     selected: showDebug,
                     onChanged: (value) => setState(() => showDebug = value),
                     color: Colors.green,
+                    icon: const Icon(Icons.info_outline),
                     child: const Text('Debug'),
                   ),
                   PillSelect(
                     selected: showInfo,
                     onChanged: (value) => setState(() => showInfo = value),
                     color: Colors.blue,
+                    icon: const Icon(Icons.info_outline),
                     child: const Text('Info'),
                   ),
                   PillSelect(
                     selected: showWarning,
                     onChanged: (value) => setState(() => showWarning = value),
                     color: Colors.orange,
+                    icon: const Icon(Icons.warning),
                     child: const Text('Warning'),
                   ),
                   PillSelect(
                     selected: showError,
                     onChanged: (value) => setState(() => showError = value),
                     color: Colors.red,
+                    icon: const Icon(Icons.error_outline),
                     child: const Text('Error'),
                   ),
                 ],
