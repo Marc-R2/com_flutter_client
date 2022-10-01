@@ -17,6 +17,9 @@ class _InteractiveConsoleState extends State<InteractiveConsole> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Interactive Console'),
+      ),
       body: Column(
         children: [
           SingleChildScrollView(

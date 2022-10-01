@@ -5,7 +5,7 @@ import 'package:com_flutter_client/com_flutter_client.dart';
 void main() {
   // Message.info(title: 'App is starting');
   runApp(COMApp(
-    homePage: MyHomePage(),
+    homePage: const MyHomePage(),
   ));
 }
 

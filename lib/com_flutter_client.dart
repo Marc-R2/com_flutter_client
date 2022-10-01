@@ -14,6 +14,8 @@ part 'console/log_message.dart';
 
 part 'console/interactive_console.dart';
 
+part 'local/local_text.dart';
+
 /// A Calculator.
 class Calculator {
   /// Returns [value] plus 1.
@@ -44,23 +46,18 @@ class COMApp extends StatelessWidget {
     locationBuilder: RoutesLocationBuilder(
       routes: {
         //'/': (context, state, data) => homePage,
-        '/:lang': (context, state, data) {
-          final lang = state.pathParameters['lang']!;
-          return homePage;
-        },
+        '/:lang': (context, state, data) => homePage,
         //'/settings': (context, state, data) => const Settings(key: ValueKey('/settings - langLess')),
-        '/:lang/settings': (context, state, data) => Settings(
-              key: ValueKey('/settings - lang: $state'),
-            ),
+        '/:lang/settings': (context, state, data) => const Settings(),
         //'/settings/console': (context, state, data) => const InteractiveConsole(key: ValueKey('/settings/console - langLess')),
-        '/:lang/settings/console': (context, state, data) => InteractiveConsole(
-            key: ValueKey('/settings/console - lang: $state')),
+        '/:lang/settings/console': (context, state, data) =>
+            const InteractiveConsole(),
         //'/settings/console/log': (context, state, data) => const LogConsole(key: ValueKey('/settings/console/log - langLess')),
         '/:lang/settings/console/log': (context, state, data) =>
-            LogConsole(key: ValueKey('/settings/console/log - lang: $state')),
+            const LogConsole(),
         //'/settings/console/log/:message': (context, state, data) => homePage,
-        '/:lang/settings/console/log/:message': (context, state, data) =>
-            LogMessagePage(),
+        '/:lang/settings/console/:message': (context, state, data) =>
+            const LogMessagePage(),
       },
     ),
   );
@@ -70,6 +67,10 @@ class COMApp extends StatelessWidget {
     return MaterialApp.router(
       routeInformationParser: BeamerParser(),
       routerDelegate: routerDelegate,
+      backButtonDispatcher: BeamerBackButtonDispatcher(
+        delegate: routerDelegate,
+        alwaysBeamBack: true,
+      ),
     );
   }
 }

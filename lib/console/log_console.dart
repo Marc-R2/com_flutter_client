@@ -25,7 +25,7 @@ class LogConsole extends StatelessWidget {
   }
 
   void beamToMessage(BuildContext context, int id) {
-    Beamer.of(context).beamToNamed('/${context.lang}/settings/console/log/$id');
+    Beamer.of(context).beamToNamed('/${context.lang}/settings/console/$id');
   }
 
   @override
