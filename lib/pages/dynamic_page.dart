@@ -11,7 +11,7 @@ abstract class DynamicPage extends StatelessWidget {
     Map<String, DynamicPage> additional = const {},
   ]) {
     final routes = <String, PageBuilder>{};
-    final pages = this.pages..addAll(additional);
+    final Map<String, DynamicPage> pages = {...this.pages, ...additional};
     pages.forEach((key, value) {
       value._buildRoutes().forEach((path, value) {
         routes['/$key$path'] = value;

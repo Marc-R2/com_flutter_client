@@ -22,7 +22,7 @@ class LogMessagePage extends DynamicPage {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Log Message - ${message.title}'),
+        title: Text('Log Message - ${message.titleString}'),
         backgroundColor: message.color ?? Colors.green,
       ),
       body: Column(

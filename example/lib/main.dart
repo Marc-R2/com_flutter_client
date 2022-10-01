@@ -1,10 +1,9 @@
 import 'package:com_flutter_client/com_flutter_client.dart';
 import 'package:example/service/provider/service_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:com_flutter_client/com_flutter_client.dart';
 
 void main() {
-  // Message.info(title: 'App is starting');
+  Message.info(title: 'App is starting');
   runApp(const COMApp(homePage: MyHomePage()));
 }
 

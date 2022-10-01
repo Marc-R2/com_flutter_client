@@ -17,6 +17,8 @@ part 'local/local_text.dart';
 
 part 'pages/dynamic_page.dart';
 
+part 'pages/settings_page.dart';
+
 part 'settings/settings.dart';
 
 part 'settings/settings_button.dart';
