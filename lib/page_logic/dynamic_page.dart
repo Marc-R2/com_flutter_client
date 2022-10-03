@@ -38,6 +38,6 @@ abstract class DynamicPage extends StatelessWidget {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DynamicPage { pages: $pages }';
+    return 'DynamicPage { page_logic: $pages }';
   }
 }

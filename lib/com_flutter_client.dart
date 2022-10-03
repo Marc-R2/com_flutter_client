@@ -11,9 +11,9 @@ part 'com_app.dart';
 
 part 'local/local_text.dart';
 
-part 'pages/dynamic_page.dart';
+part 'page_logic/dynamic_page.dart';
 
-part 'pages/settings_page.dart';
+part 'page_logic/settings_page.dart';
 
 part 'settings/about/about_page.dart';
 
@@ -29,7 +29,7 @@ part 'settings/help/help_page.dart';
 
 part 'settings/language/language_page.dart';
 
-part 'settings/notification/notification_page.dart';
+part 'settings/notifications/notifications_page.dart';
 
 part 'settings/privacy/privacy_page.dart';
 

@@ -5,8 +5,16 @@ class Settings extends DynamicPage {
 
   @override
   Map<String, SettingsPage> get pages => {
+        'language': const LanguagePage(),
+        'appearance': const AppearancePage(),
+        'account': const AccountPage(),
+        'notifications': const NotificationsPage(),
+        'accessibility': const AccessibilityPage(),
+        'privacy': const PrivacyPage(),
+        'help': const HelpPage(),
+        'feedback': const FeedbackPage(),
         'debug': const DebugPage(),
-        // 'about': const AboutPage(),
+        'about': const AboutPage(),
       };
 
   void _beamToChild(BuildContext context, String path) {

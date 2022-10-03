@@ -12,15 +12,20 @@ class DebugPage extends SettingsPage {
   Icon get overviewIcon => const Icon(Icons.code);
 
   @override
-  Widget? get overviewSubtitle => null;
+  Widget? get overviewSubtitle => const Text(
+        'Warning: This one might be a bit nerdy', // Please be careful!
+      );
 
   @override
-  Widget get overviewTitle => const Text('Interactive Console');
+  Widget get overviewTitle => const Text('Debug');
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Debug'),
+      ),
+      body: const Center(
         child: Text('Debug'),
       ),
     );
