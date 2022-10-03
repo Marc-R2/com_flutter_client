@@ -1,4 +1,4 @@
-part of '../com_flutter_client.dart';
+part of '../../../com_flutter_client.dart';
 
 class LogConsolePage extends DynamicPage {
   const LogConsolePage({super.key});

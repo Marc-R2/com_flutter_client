@@ -5,12 +5,13 @@ class Settings extends DynamicPage {
 
   @override
   Map<String, SettingsPage> get pages => {
-        'console': const InteractiveConsolePage(),
+        'debug': const DebugPage(),
+        // 'about': const AboutPage(),
       };
 
-  void beamToChild(BuildContext context, String path) {
+  void _beamToChild(BuildContext context, String path) {
     final state = context.beamState;
-    final newUri = '${state!.uri.toString()}/$path';
+    final newUri = '${state!.uri}/$path';
     context.beamToNamed(newUri);
   }
 
@@ -31,7 +32,7 @@ class Settings extends DynamicPage {
             title: page.overviewTitle,
             subtitle: page.overviewSubtitle,
             leading: page.overviewIcon,
-            onTap: () => beamToChild(context, key),
+            onTap: () => _beamToChild(context, key),
           );
         },
       ),

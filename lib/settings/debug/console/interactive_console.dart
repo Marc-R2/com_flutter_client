@@ -1,21 +1,12 @@
-part of '../com_flutter_client.dart';
+part of '../../../com_flutter_client.dart';
 
-class InteractiveConsolePage extends SettingsPage {
+class InteractiveConsolePage extends DynamicPage {
   const InteractiveConsolePage({super.key});
 
   @override
   Map<String, DynamicPage> get pages => {
         ':message': const LogMessagePage(),
       };
-
-  @override
-  Icon get overviewIcon => const Icon(Icons.code);
-
-  @override
-  Widget? get overviewSubtitle => null;
-
-  @override
-  Widget get overviewTitle => const Text('Interactive Console');
 
   @override
   Widget build(BuildContext context) => const InteractiveConsole();

@@ -1,4 +1,4 @@
-part of '../com_flutter_client.dart';
+part of '../../../com_flutter_client.dart';
 
 class LogMessagePage extends DynamicPage {
   const LogMessagePage({super.key});
