@@ -27,14 +27,14 @@ class COMApp extends StatelessWidget {
         key: const ValueKey('404'),
         child: errorPage ?? const ErrorPage(),
       ),
-      /*routeListener: (context, state) {
+      routeListener: (context, state) {
         Message.trace(
           title: 'Switch Page',
           text: 'New location is {path}',
           log: true,
           templateValues: {'path': context.location ?? 'unknown'},
         );
-      },*/
+      },
       locationBuilder: RoutesLocationBuilder(
         routes: homePage.buildRoutes(internalPages),
         //{'/:lang': (context, state, data) => homePage}, //

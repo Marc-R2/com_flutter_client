@@ -3,7 +3,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  // Message.info(title: 'App is starting');
+  Message.info(title: 'App is starting');
   runApp(COMApp(homePage: const MyHomePage()));
 }
 
@@ -30,10 +30,10 @@ class _MyHomeState extends State<MyHome> {
   void _incrementCounter() {
     setState(() {
       _counter++;
-      /* Message.info(
+      Message.info(
         title: 'Incremented to {counter}',
         templateValues: {'counter': '$_counter'},
-      ); */
+      );
     });
   }
 
@@ -41,7 +41,7 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeScreen'),
+        title: const Text('Home Screen'),
         actions: const [
           OpenSettingsIcon(),
         ],

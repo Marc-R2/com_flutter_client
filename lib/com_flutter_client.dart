@@ -68,11 +68,11 @@ extension BuildContextLanguage on BuildContext {
     try {
       return Beamer.of(this).currentBeamLocation.state as BeamState?;
     } catch (e, trace) {
-      /*Message.error(
+      Message.error(
         title: 'Error getting BeamState',
         text: '$e',
         stackTrace: trace,
-      );*/
+      );
       return null;
     }
   }
@@ -82,17 +82,17 @@ extension BuildContextLanguage on BuildContext {
       if (beamState != null && beamState!.pathParameters.containsKey('lang')) {
         return beamState!.pathParameters['lang']!;
       } else {
-        /*Message.info(
+        Message.info(
           title: 'No language found',
           text: 'Using default (en)',
-        );*/
+        );
       }
     } catch (e, trace) {
-      /*Message.warning(
+      Message.warning(
         title: 'Error getting language',
         text: '$e',
         stackTrace: trace,
-      );*/
+      );
     }
     return 'en';
   }
@@ -101,11 +101,11 @@ extension BuildContextLanguage on BuildContext {
     try {
       Beamer.of(this).beamToNamed(path);
     } catch (e, trace) {
-      /* Message.error(
+      Message.error(
         title: 'Error beaming to $path',
         text: '$e',
         stackTrace: trace,
-      ); */
+      );
     }
   }
 
