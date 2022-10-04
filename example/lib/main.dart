@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   Message.info(title: 'App is starting');
-  runApp(const COMApp(homePage: MyHomePage()));
+  runApp(COMApp(homePage: const MyHomePage()));
 }
 
 class MyHomePage extends DynamicPage {
@@ -69,33 +69,34 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('HomeScreen'),
         actions: const [
           OpenSettingsIcon(),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Text('You have pushed the button this many times:'),
-          Text(
-            '$_counter',
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          TextButton(
-            onPressed: () async {
-              final ms = ping.ping.request(
-                fields: [ping.ping.wait],
-                data: {'wait': 4096},
-              ).values;
-              await Future.wait(ms.toList());
-              setState(() => _counter = 0);
-            },
-            child: const Text('Test - Connection to COM'),
-          ),
-          // const Expanded(child: InteractiveConsole()),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text('You pushed the button this many times:'),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            TextButton(
+              onPressed: () async {
+                final ms = ping.ping.request(
+                  fields: [ping.ping.wait],
+                  data: {'wait': 4096},
+                ).values;
+                await Future.wait(ms.toList());
+                setState(() => _counter = 0);
+              },
+              child: const Text('Test - Connection to COM'),
+            ),
+            // const Expanded(child: InteractiveConsole()),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

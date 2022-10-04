@@ -25,8 +25,15 @@ class DebugPage extends SettingsPage {
       appBar: AppBar(
         title: const Text('Debug'),
       ),
-      body: const Center(
-        child: Text('Debug'),
+      body: Column(
+        children: [
+          ListTile(
+            title: const Text('Console'),
+            subtitle: const Text('Sure you want to see this?!'),
+            leading: const Icon(Icons.code),
+            onTap: () => context.beamToChild('console'),
+          ),
+        ],
       ),
     );
   }

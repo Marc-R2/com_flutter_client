@@ -89,4 +89,23 @@ extension BuildContextLanguage on BuildContext {
     }
     return 'en';
   }
+
+  void _beamToRaw(String path) {
+    try {
+      Beamer.of(this).beamToNamed(path);
+    } catch (e, trace) {
+      Message.error(
+        title: 'Error beaming to $path',
+        text: '$e',
+        stackTrace: trace,
+      );
+    }
+  }
+
+  void beamTo(String path) => _beamToRaw('/$lang/$path');
+
+  void beamToChild(String path) {
+    final newUri = '${beamState!.uri}/$path';
+    _beamToRaw(newUri);
+  }
 }

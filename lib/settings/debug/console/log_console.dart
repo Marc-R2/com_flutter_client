@@ -35,9 +35,7 @@ class LogConsole extends StatelessWidget {
     return true;
   }
 
-  void beamToMessage(BuildContext context, int id) {
-    Beamer.of(context).beamToNamed('/${context.lang}/settings/console/$id');
-  }
+  void toMessage(BuildContext context, int id) => context.beamToChild('$id');
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,7 @@ class LogConsole extends StatelessWidget {
                 title: Text(message.replaceTemplates(message.title)),
                 dense: true,
                 leading: message.icon,
-                onTap: () => beamToMessage(context, keys[length - index - 1]),
+                onTap: () => toMessage(context, keys[length - index - 1]),
               ),
             );
           },

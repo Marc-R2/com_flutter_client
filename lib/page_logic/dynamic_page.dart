@@ -2,34 +2,51 @@ part of '../com_flutter_client.dart';
 
 typedef PageBuilder = DynamicPage Function(BuildContext, BeamState, Object?);
 
+class DynamicPageWrapper extends DynamicPage {
+  const DynamicPageWrapper({
+    required super.key,
+    required this.child,
+  });
+
+  final DynamicPage child;
+
+  @override
+  Map<String, DynamicPage> get pages => child.pages;
+
+  @override
+  Widget build(BuildContext context) => child;
+}
+
 abstract class DynamicPage extends StatelessWidget {
   const DynamicPage({super.key});
 
   Map<String, DynamicPage> get pages;
 
-  Map<String, PageBuilder> _buildRoutes([
+  Map<String, DynamicPage> _buildRoutes([
     Map<String, DynamicPage> additional = const {},
   ]) {
-    final routes = <String, PageBuilder>{};
-    final Map<String, DynamicPage> pages = {...this.pages, ...additional};
-    pages.forEach((key, value) {
+    final routes = <String, DynamicPage>{};
+    <String, DynamicPage>{...pages, ...additional}.forEach((key, value) {
       value._buildRoutes().forEach((path, value) {
         routes['/$key$path'] = value;
       });
-      routes['/$key'] = (context, state, data) => value;
+      routes['/$key'] = value;
     });
-    routes[''] = (context, state, data) => this;
+    routes[''] = this;
     return routes;
   }
 
   Map<String, PageBuilder> buildRoutes([
     Map<String, DynamicPage> additional = const {},
   ]) {
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
     final routes = <String, PageBuilder>{};
-    final newRoutes = _buildRoutes(additional);
-    newRoutes.forEach((key, value) {
+    _buildRoutes(additional).forEach((key, value) {
       print('Adding route: /:lang$key => $value');
-      routes['/:lang$key'] = value;
+      routes['/:lang$key'] = (context, state, data) => DynamicPageWrapper(
+            key: ValueKey('$key-?@?-$time'),
+            child: value,
+          );
     });
     routes['/:lang'] = (context, state, data) => this;
     print('Routes: $routes');

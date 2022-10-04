@@ -1,7 +1,7 @@
 part of 'com_flutter_client.dart';
 
 class COMApp extends StatelessWidget {
-  const COMApp({
+  COMApp({
     super.key,
     required this.homePage,
     this.errorPage,
@@ -14,13 +14,15 @@ class COMApp extends StatelessWidget {
 
   final String initLang;
 
-  BeamerDelegate get routerDelegate {
+  late final BeamerDelegate routerDelegate = _routerDelegate;
+
+  BeamerDelegate get _routerDelegate {
     const internalPages = <String, DynamicPage>{
-      'settings': Settings(),
+      //'settings': Settings(),
     };
 
     return BeamerDelegate(
-      initialPath: '/$initLang',
+      /*initialPath: '/$initLang',
       notFoundPage: BeamPage(
         key: const ValueKey('404'),
         child: errorPage ??
@@ -33,59 +35,24 @@ class COMApp extends StatelessWidget {
           log: true,
           templateValues: {'path': context.location ?? 'unknown'},
         );
-      },
+      },*/
       locationBuilder: RoutesLocationBuilder(
-        routes: homePage.buildRoutes(internalPages),
+        routes: {
+          '/': (context, state, data) => homePage,
+        },// homePage.buildRoutes(internalPages),
       ),
     );
   }
 
-  Future<bool> leaveAppDialog(BuildContext context) async {
-    final state = context.beamState;
-    if (state != null && state.uri.pathSegments.length > 1) {
-      routerDelegate.beamBack();
-      return false;
-    }
-
-    var willLeave = false;
-
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Leave App'),
-            content: const Text('Are you sure you want to leave the app?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  willLeave = true;
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Leave'),
-              ),
-            ],
-          );
-        });
-
-    return willLeave;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final routerDelegate = this.routerDelegate;
-    return WillPopScope(
-      onWillPop: () => leaveAppDialog(context),
-      child: MaterialApp.router(
-        routeInformationParser: BeamerParser(),
-        routerDelegate: routerDelegate,
-        backButtonDispatcher: BeamerBackButtonDispatcher(
-          delegate: routerDelegate,
-          alwaysBeamBack: true,
-        ),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routeInformationParser: BeamerParser(),
+      routerDelegate: routerDelegate,
+      backButtonDispatcher: BeamerBackButtonDispatcher(
+        delegate: routerDelegate,
+        // alwaysBeamBack: true,
       ),
     );
   }
