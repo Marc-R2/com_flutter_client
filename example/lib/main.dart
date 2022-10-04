@@ -1,12 +1,12 @@
-//import 'package:com_flutter_client/com_flutter_client.dart';
+import 'package:com_flutter_client/com_flutter_client.dart';
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   // Message.info(title: 'App is starting');
-  runApp(MyHomePageTemp());
+  runApp(COMApp(homePage: const MyHomePage()));
 }
-/*
+
 class MyHomePage extends DynamicPage {
   const MyHomePage({super.key});
 
@@ -15,27 +15,6 @@ class MyHomePage extends DynamicPage {
 
   @override
   Widget build(BuildContext context) => const MyHome();
-}
-*/
-
-class MyHomePageTemp extends StatelessWidget {
-  MyHomePageTemp({super.key});
-
-  final routerDelegate = BeamerDelegate(
-    locationBuilder: RoutesLocationBuilder(
-      routes: {
-        '/': (context, state, data) => const MyHome(),
-      },
-    ),
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routeInformationParser: BeamerParser(),
-      routerDelegate: routerDelegate,
-    );
-  }
 }
 
 class MyHome extends StatefulWidget {
@@ -51,12 +30,10 @@ class _MyHomeState extends State<MyHome> {
   void _incrementCounter() {
     setState(() {
       _counter++;
-      /*
-      Message.info(
+      /* Message.info(
         title: 'Incremented to {counter}',
         templateValues: {'counter': '$_counter'},
-      );
-      */
+      ); */
     });
   }
 
@@ -64,7 +41,10 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('HomeScreen'),
+        actions: const [
+          OpenSettingsIcon(),
+        ],
       ),
       body: Center(
         child: Column(

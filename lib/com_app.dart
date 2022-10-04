@@ -14,28 +14,20 @@ class COMApp extends StatelessWidget {
 
   final String initLang;
 
-  late final BeamerDelegate routerDelegate = BeamerDelegate(
-    locationBuilder: RoutesLocationBuilder(
-      routes: {
-        '/': (context, state, data) => homePage,
-      }, // homePage.buildRoutes(internalPages),
-      builder: (context, child) => child,
-    ),
-  );
+  late BeamerDelegate routerDelegate = _routerDelegate;
 
   BeamerDelegate get _routerDelegate {
     const internalPages = <String, DynamicPage>{
-      //'settings': Settings(),
+      'settings': Settings(),
     };
 
     return BeamerDelegate(
-      /*initialPath: '/$initLang',
+      initialPath: '/$initLang',
       notFoundPage: BeamPage(
         key: const ValueKey('404'),
-        child: errorPage ??
-            const Scaffold(body: Center(child: Text('404 - Not Found'))),
+        child: errorPage ?? const ErrorPage(),
       ),
-      routeListener: (context, state) {
+      /*routeListener: (context, state) {
         Message.trace(
           title: 'Switch Page',
           text: 'New location is {path}',
@@ -44,9 +36,8 @@ class COMApp extends StatelessWidget {
         );
       },*/
       locationBuilder: RoutesLocationBuilder(
-        routes: {
-          '/': (context, state, data) => homePage,
-        }, // homePage.buildRoutes(internalPages),
+        routes: homePage.buildRoutes(internalPages),
+        //{'/:lang': (context, state, data) => homePage}, //
         builder: (context, child) => child,
       ),
     );
@@ -54,6 +45,7 @@ class COMApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // routerDelegate = _routerDelegate;
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routeInformationParser: BeamerParser(),
@@ -62,6 +54,21 @@ class COMApp extends StatelessWidget {
         delegate: routerDelegate,
         // alwaysBeamBack: true,
       ),
+    );
+  }
+}
+
+class ErrorPage extends StatelessWidget {
+  const ErrorPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('404'),
+        actions: const [GoHomeIcon()],
+      ),
+      body: const Center(child: Text('404 - Not Found')),
     );
   }
 }
