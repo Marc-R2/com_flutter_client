@@ -14,7 +14,14 @@ class COMApp extends StatelessWidget {
 
   final String initLang;
 
-  late final BeamerDelegate routerDelegate = _routerDelegate;
+  late final BeamerDelegate routerDelegate = BeamerDelegate(
+    locationBuilder: RoutesLocationBuilder(
+      routes: {
+        '/': (context, state, data) => homePage,
+      }, // homePage.buildRoutes(internalPages),
+      builder: (context, child) => child,
+    ),
+  );
 
   BeamerDelegate get _routerDelegate {
     const internalPages = <String, DynamicPage>{
@@ -39,7 +46,8 @@ class COMApp extends StatelessWidget {
       locationBuilder: RoutesLocationBuilder(
         routes: {
           '/': (context, state, data) => homePage,
-        },// homePage.buildRoutes(internalPages),
+        }, // homePage.buildRoutes(internalPages),
+        builder: (context, child) => child,
       ),
     );
   }
