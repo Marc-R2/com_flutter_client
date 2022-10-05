@@ -42,30 +42,33 @@ class LogConsole extends StatelessWidget {
     return StreamBuilder(
       stream: Logger().stream,
       builder: (context, snapshot) {
-        final keys = Logger.messages.keys.toList();
-        final length = Logger.messages.length;
-        int counter = 0;
-        return ListView.builder(
-          itemCount: length,
-          itemBuilder: (context, index) {
-            final message = Logger.messages[keys[length - index - 1]];
-            if (message == null || !filter(message)) {
-              if (counter == 0 && index + 1 >= length) {
-                return const Center(child: Text('Nothing to show here'));
-              }
-              return const SizedBox();
-            }
-            counter++;
-            return Card(
-              color: message.color,
-              child: ListTile(
-                title: Text(message.replaceTemplates(message.title)),
-                dense: true,
-                leading: message.icon,
-                onTap: () => toMessage(context, keys[length - index - 1]),
-              ),
-            );
-          },
+        final messages = Logger.messages.values.toList();
+        final filtered = messages.where(filter).toList().reversed.toList();
+        if (filtered.isEmpty) {
+          return const Center(child: Text('Nothing to show here'));
+        }
+        print(filtered.length);
+        
+        return Scrollbar(
+          radius: const Radius.circular(10),
+          child: ListView.builder(
+            itemCount: filtered.length,
+            itemBuilder: (context, index) {
+              final message = filtered[index];
+              return Card(
+                color: message.color,
+                child: ListTile(
+                  title: Text(message.replaceTemplates(message.title)),
+                  dense: true,
+                  leading: message.icon,
+                  onTap: () => toMessage(
+                    context,
+                    message.time.millisecondsSinceEpoch,
+                  ),
+                ),
+              );
+            },
+          ),
         );
       },
     );

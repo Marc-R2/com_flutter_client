@@ -2,7 +2,9 @@ library com_flutter_client;
 
 import 'package:com_flutter_client/com_flutter_client.dart';
 import 'package:com_flutter_client/util/pill_select.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:wakelock/wakelock.dart';
 
 export 'package:beamer/beamer.dart';
 export 'package:com_client/com_client.dart';

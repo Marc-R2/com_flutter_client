@@ -45,6 +45,12 @@ class COMApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // If app is in debug mode
+    if (kDebugMode) {
+      Wakelock.enable();
+      Message.warning(title: 'Wakelock enabled');
+    }
+
     // routerDelegate = _routerDelegate;
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
