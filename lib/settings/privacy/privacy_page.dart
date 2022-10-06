@@ -1,6 +1,6 @@
 part of '../../com_flutter_client.dart';
 
-class PrivacyPage extends SettingsPage {
+class PrivacyPage extends SettingsChildPage {
   const PrivacyPage({super.key});
 
   @override

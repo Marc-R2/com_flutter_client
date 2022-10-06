@@ -1,6 +1,6 @@
 part of '../../com_flutter_client.dart';
 
-class AppearancePage extends SettingsPage {
+class AppearancePage extends SettingsChildPage {
   const AppearancePage({super.key});
 
   @override

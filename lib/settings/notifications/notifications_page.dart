@@ -1,6 +1,6 @@
 part of '../../com_flutter_client.dart';
 
-class NotificationsPage extends SettingsPage {
+class NotificationsPage extends SettingsChildPage {
   const NotificationsPage({super.key});
 
   @override

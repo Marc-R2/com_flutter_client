@@ -4,6 +4,7 @@ import 'package:com_flutter_client/com_flutter_client.dart';
 import 'package:com_flutter_client/util/pill_select.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wakelock/wakelock.dart';
 
 export 'package:beamer/beamer.dart';
@@ -14,6 +15,8 @@ part 'com_app.dart';
 part 'local/local_text.dart';
 
 part 'page_logic/dynamic_page.dart';
+
+part 'page_logic/leave_page.dart';
 
 part 'page_logic/settings_page.dart';
 

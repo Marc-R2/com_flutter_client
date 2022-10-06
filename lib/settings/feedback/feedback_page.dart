@@ -1,6 +1,6 @@
 part of '../../com_flutter_client.dart';
 
-class FeedbackPage extends SettingsPage {
+class FeedbackPage extends SettingsChildPage {
   const FeedbackPage({super.key});
 
   @override

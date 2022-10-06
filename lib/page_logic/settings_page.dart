@@ -1,7 +1,7 @@
 part of '../com_flutter_client.dart';
 
-abstract class SettingsPage extends DynamicPage {
-  const SettingsPage({super.key});
+abstract class SettingsChildPage extends DynamicPage {
+  const SettingsChildPage({super.key});
 
   Widget get overviewTitle;
 

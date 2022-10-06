@@ -1,6 +1,6 @@
 part of '../../com_flutter_client.dart';
 
-class AboutPage extends SettingsPage {
+class AboutPage extends SettingsChildPage {
   const AboutPage({super.key});
 
   @override

@@ -1,26 +1,18 @@
 part of '../com_flutter_client.dart';
 
-typedef PageBuilder = DynamicPage Function(BuildContext, BeamState, Object?);
-
-class DynamicPageWrapper extends DynamicPage {
-  const DynamicPageWrapper({
-    required super.key,
-    required this.child,
-  });
-
-  final DynamicPage child;
-
-  @override
-  Map<String, DynamicPage> get pages => child.pages;
-
-  @override
-  Widget build(BuildContext context) => child;
-}
+typedef PageBuilder = BeamPage Function(BuildContext, BeamState, Object?);
 
 abstract class DynamicPage extends StatelessWidget {
   const DynamicPage({super.key});
 
   Map<String, DynamicPage> get pages;
+
+  BeamPageType get transition => BeamPageType.material;
+
+  Future<bool> onPopMainPage(BuildContext context) async {
+    context.beamToChild('leave');
+    return false;
+  }
 
   Map<String, DynamicPage> _buildRoutes([
     Map<String, DynamicPage> additional = const {},
@@ -43,12 +35,21 @@ abstract class DynamicPage extends StatelessWidget {
     final routes = <String, PageBuilder>{};
     _buildRoutes(additional).forEach((key, value) {
       print('Adding route: /:lang$key => $value');
-      routes['/:lang$key'] = (context, state, data) => DynamicPageWrapper(
-            key: ValueKey('$key-?@?-$time'),
-            child: value,
-          );
+      final page = BeamPage(
+        key: ValueKey('$key-?@?-$time'),
+        type: value.transition,
+        child: value,
+      );
+      routes['/:lang$key'] = (context, state, data) => page;
     });
-    routes['/:lang'] = (context, state, data) => this;
+    routes['/:lang'] = (context, state, data) => BeamPage(
+          key: ValueKey('/-?@?-$time'),
+          type: transition,
+          child: WillPopScope(
+            onWillPop: () => onPopMainPage(context),
+            child: this,
+          ),
+        );
     print('Routes: $routes');
     return routes;
   }

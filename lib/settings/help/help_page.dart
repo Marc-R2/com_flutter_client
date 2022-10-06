@@ -1,6 +1,6 @@
 part of '../../com_flutter_client.dart';
 
-class HelpPage extends SettingsPage {
+class HelpPage extends SettingsChildPage {
   const HelpPage({super.key});
 
   @override

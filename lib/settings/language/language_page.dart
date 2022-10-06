@@ -1,6 +1,6 @@
 part of '../../com_flutter_client.dart';
 
-class LanguagePage extends SettingsPage {
+class LanguagePage extends SettingsChildPage {
   const LanguagePage({super.key});
 
   @override

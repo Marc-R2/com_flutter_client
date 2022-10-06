@@ -17,8 +17,9 @@ class COMApp extends StatelessWidget {
   late BeamerDelegate routerDelegate = _routerDelegate;
 
   BeamerDelegate get _routerDelegate {
-    const internalPages = <String, DynamicPage>{
-      'settings': Settings(),
+    final internalPages = <String, DynamicPage>{
+      'settings': const SettingsPage(),
+      'leave': LeavePage(child: homePage),
     };
 
     return BeamerDelegate(

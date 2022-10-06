@@ -1,6 +1,6 @@
 part of '../../com_flutter_client.dart';
 
-class AccessibilityPage extends SettingsPage {
+class AccessibilityPage extends SettingsChildPage {
   const AccessibilityPage({super.key});
 
   @override

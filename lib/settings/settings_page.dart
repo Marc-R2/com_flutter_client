@@ -1,10 +1,10 @@
 part of '../com_flutter_client.dart';
 
-class Settings extends DynamicPage {
-  const Settings({super.key});
+class SettingsPage extends DynamicPage {
+  const SettingsPage({super.key});
 
   @override
-  Map<String, SettingsPage> get pages => {
+  Map<String, SettingsChildPage> get pages => {
         'language': const LanguagePage(),
         'appearance': const AppearancePage(),
         'account': const AccountPage(),
