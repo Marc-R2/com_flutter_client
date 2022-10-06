@@ -40,6 +40,8 @@ class _MyHomeState extends State<MyHome> {
     _initClient();
   }
 
+  TaskRequest? _task;
+
   void _initClient() {
     _com.init().then((value) async {
       if (_com.exists) await _com.connectClient();
@@ -65,11 +67,14 @@ class _MyHomeState extends State<MyHome> {
   }
 
   void _ping() async {
-    final ms = ping.ping.request(fields: [ping.ping.msServer]);
     final now1 = DateTime.now().millisecondsSinceEpoch;
-    await Future.wait(ms.values.toList());
+    setState(() {
+      _task = ping.ping.request(fields: [ping.ping.msServer]);
+    });
+    if (_task == null) return;
+    final ms = await _task!.getField('millisecondOnServer');
     final now2 = DateTime.now().millisecondsSinceEpoch;
-    final msServer = int.parse('${(await ms.values.first).value}');
+    final msServer = int.parse('${ms.value}');
     Message.log(
       title: 'Ping: {ms}ms',
       templateValues: {'ms': '$msServer'},
@@ -78,13 +83,14 @@ class _MyHomeState extends State<MyHome> {
       title: 'Ping: {ms}ms / {ms2}ms',
       templateValues: {'ms': '${now2 - now1}', 'ms2': '${msServer - now1}'},
     );
-    setState(() => _counter = msServer);
+    _counter = msServer;
+    // setState(() => _counter = msServer);
   }
 
   Future<void> _pingRepeat() async {
-    for (var i = 0; i < 4096; i++) {
+    for (var i = 0; i < 1024; i++) {
       _ping();
-      await Future<void>.delayed(const Duration(milliseconds: 1));
+      await Future<void>.delayed(const Duration(milliseconds: 8));
     }
   }
 
@@ -113,6 +119,38 @@ class _MyHomeState extends State<MyHome> {
             TextButton(
               onPressed: _pingRepeat,
               child: const Text('Test Repeat'),
+            ),
+            FieldBuilder(
+              task: _task,
+              field: 'millisecondOnServer',
+              builder: (context, answer) {
+                final ms = int.tryParse('${answer.value}');
+                return Text(
+                  'ms: $ms',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                );
+              },
+            ),
+            TaskRequestScope(
+              task: _task,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Divider(),
+                  const Text('millisecondOnServer'),
+                  FieldBuilder(
+                    field: 'millisecondOnServer',
+                    builder: (context, answer) {
+                      final ms = int.tryParse('${answer.value}');
+                      return Text(
+                        'ms: $ms',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      );
+                    },
+                  ),
+                  const Divider(),
+                ],
+              ),
             ),
             const Expanded(child: LogConsole(showInfo: false)),
           ],

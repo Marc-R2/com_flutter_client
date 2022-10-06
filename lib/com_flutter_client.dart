@@ -45,6 +45,10 @@ part 'settings/debug/debug_page.dart';
 
 part 'settings/settings_page.dart';
 
+part 'task/field_builder.dart';
+
+part 'task/task_request_scope.dart';
+
 part 'util/home_button.dart';
 
 part 'util/settings_button.dart';
