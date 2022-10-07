@@ -67,23 +67,27 @@ class _MyHomeState extends State<MyHome> {
   }
 
   void _ping() async {
+    setState(() => _task = null);
+    await Future<void>.delayed(const Duration(seconds: 1));
     final now1 = DateTime.now().millisecondsSinceEpoch;
     setState(() {
-      _task = ping.ping.request(fields: [ping.ping.msServer]);
+      _task = ping.ping.request(fields: [ping.ping.wait]);
     });
     if (_task == null) return;
     final ms = await _task!.getField('millisecondOnServer');
     final now2 = DateTime.now().millisecondsSinceEpoch;
-    final msServer = int.parse('${ms.value}');
+    final msServer = int.tryParse('${ms.value}');
     Message.log(
       title: 'Ping: {ms}ms',
       templateValues: {'ms': '$msServer'},
     );
-    Message.warning(
-      title: 'Ping: {ms}ms / {ms2}ms',
-      templateValues: {'ms': '${now2 - now1}', 'ms2': '${msServer - now1}'},
-    );
-    _counter = msServer;
+    if (msServer is int) {
+      Message.warning(
+        title: 'Ping: {ms}ms / {ms2}ms',
+        templateValues: {'ms': '${now2 - now1}', 'ms2': '${msServer - now1}'},
+      );
+      _counter = msServer;
+    }
     // setState(() => _counter = msServer);
   }
 
@@ -119,6 +123,22 @@ class _MyHomeState extends State<MyHome> {
             TextButton(
               onPressed: _pingRepeat,
               child: const Text('Test Repeat'),
+            ),
+            ColoredBox(
+              color: Colors.grey,
+              child: SizedFieldBuilder(
+                task: _task,
+                width: 200,
+                height: 100,
+                field: 'millisecondOnServer',
+                onNull: const Text('Task contains no value'),
+                builder: (context, answer) {
+                  return Text(
+                    'ms: ${answer.value}',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  );
+                },
+              ),
             ),
             FieldBuilder(
               task: _task,

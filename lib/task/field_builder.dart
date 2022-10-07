@@ -5,10 +5,11 @@ class FieldBuilder extends StatelessWidget {
     required this.builder,
     required this.field,
     this.task,
-    super.key,
     this.onTaskNotFound,
     this.onWaiting,
     this.onError,
+    this.onNull,
+    super.key,
   });
 
   final String field;
@@ -22,6 +23,8 @@ class FieldBuilder extends StatelessWidget {
   final Widget? onWaiting;
 
   final Widget? onError;
+
+  final Widget? onNull;
 
   TaskRequest? getTask(BuildContext context) {
     if (task != null) return task;
@@ -39,23 +42,16 @@ class FieldBuilder extends StatelessWidget {
       future: fieldTask,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return builder(context, snapshot.data!);
+          final data = snapshot.data!;
+          print('The data is $data && $onNull && ${data.valueType}');
+          if ((data.value == null || data.valueType == 'empty') &&
+              onNull != null) return onNull!;
+          return builder(context, data);
         } else if (snapshot.hasError) {
           return onError ?? Text('Error: ${snapshot.error}');
         }
         return onWaiting ?? const CircularProgressIndicator();
       },
-    );
-  }
-}
-
-class TaskNotFound extends StatelessWidget {
-  const TaskNotFound({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Could not find any task in Scope or direct'),
     );
   }
 }

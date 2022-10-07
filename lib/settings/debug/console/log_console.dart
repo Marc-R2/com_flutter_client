@@ -47,8 +47,6 @@ class LogConsole extends StatelessWidget {
         if (filtered.isEmpty) {
           return const Center(child: Text('Nothing to show here'));
         }
-        print(filtered.length);
-        
         return Scrollbar(
           radius: const Radius.circular(10),
           child: ListView.builder(
