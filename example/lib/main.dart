@@ -1,4 +1,5 @@
 import 'package:com_flutter_client/com_flutter_client.dart';
+import 'package:example/service/provider/applink_client.dart';
 import 'package:example/service/provider/service_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -56,6 +57,8 @@ class _MyHomeState extends State<MyHome> {
 
   PingService get ping => PingService(com: com);
 
+  ApplinkService get backlink => ApplinkService(com: com);
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -67,11 +70,11 @@ class _MyHomeState extends State<MyHome> {
   }
 
   void _ping() async {
-    setState(() => _task = null);
-    await Future<void>.delayed(const Duration(seconds: 1));
+    //setState(() => _task = null);
+    //await Future<void>.delayed(const Duration(seconds: 1));
     final now1 = DateTime.now().millisecondsSinceEpoch;
     setState(() {
-      _task = ping.ping.request(fields: [ping.ping.wait]);
+      _task = ping.ping.request(fields: [ping.ping.msServer]);
     });
     if (_task == null) return;
     final ms = await _task!.getField('millisecondOnServer');
@@ -89,6 +92,28 @@ class _MyHomeState extends State<MyHome> {
       _counter = msServer;
     }
     // setState(() => _counter = msServer);
+  }
+
+  void _basicApplink() async {
+    final now1 = DateTime.now().millisecondsSinceEpoch;
+    setState(() {
+      _task = backlink.applink.msServer.request();
+    });
+    if (_task == null) return;
+    final ms = await _task!.getField('millisecondOnServer');
+    final now2 = DateTime.now().millisecondsSinceEpoch;
+    final msServer = int.tryParse('${ms.value}');
+    Message.log(
+      title: 'Ping: {ms}ms',
+      templateValues: {'ms': '$msServer'},
+    );
+    if (msServer is int) {
+      Message.warning(
+        title: 'Ping: {ms}ms / {ms2}ms',
+        templateValues: {'ms': '${now2 - now1}', 'ms2': '${msServer - now1}'},
+      );
+      _counter = msServer;
+    }
   }
 
   Future<void> _pingRepeat() async {
@@ -118,7 +143,11 @@ class _MyHomeState extends State<MyHome> {
             ),
             TextButton(
               onPressed: _ping,
-              child: const Text('Test'),
+              child: const Text('Test Ping'),
+            ),
+            TextButton(
+              onPressed: _basicApplink,
+              child: const Text('Test Backlink'),
             ),
             TextButton(
               onPressed: _pingRepeat,

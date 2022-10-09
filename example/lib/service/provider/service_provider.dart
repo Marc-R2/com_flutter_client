@@ -12,7 +12,10 @@ class ServicesTask extends LocalTask {
   @override
   List<LocalField<LocalTask>> get fields => [getServices];
 
-  final getServices = const LocalField<ServicesTask>(name: 'getServices');
+  late final getServices = LocalField<ServicesTask>(
+    name: 'getServices',
+    task: this,
+  );
 }
 
 class PingService extends LocalService {
@@ -27,9 +30,28 @@ class PingTask extends LocalTask {
   @override
   List<LocalField<LocalTask>> get fields => [];
 
-  final ping = const LocalField<ServicesTask>(name: 'ping');
-  final secServer = const LocalField<ServicesTask>(name: 'secondOnServer');
-  final msServer = const LocalField<ServicesTask>(name: 'millisecondOnServer');
-  final usServer = const LocalField<ServicesTask>(name: 'microsecondOnServer');
-  final wait = const LocalField<ServicesTask>(name: 'waitAndReturnSec');
+  late final ping = LocalField<PingTask>(
+    name: 'ping',
+    task: this,
+  );
+
+  late final secServer = LocalField<PingTask>(
+    name: 'secondOnServer',
+    task: this,
+  );
+
+  late final msServer = LocalField<PingTask>(
+    name: 'millisecondOnServer',
+    task: this,
+  );
+
+  late final usServer = LocalField<PingTask>(
+    name: 'microsecondOnServer',
+    task: this,
+  );
+
+  late final wait = LocalField<PingTask>(
+    name: 'waitAndReturnSec',
+    task: this,
+  );
 }

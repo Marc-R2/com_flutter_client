@@ -43,9 +43,9 @@ class FieldBuilder extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final data = snapshot.data!;
-          print('The data is $data && $onNull && ${data.valueType}');
           if ((data.value == null || data.valueType == 'empty') &&
               onNull != null) return onNull!;
+          if (data.status != 2 && onError != null) return onError!;
           return builder(context, data);
         } else if (snapshot.hasError) {
           return onError ?? Text('Error: ${snapshot.error}');
