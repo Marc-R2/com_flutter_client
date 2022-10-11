@@ -1,6 +1,5 @@
+import 'package:backlink_service_dart/backlink_service_dart.dart';
 import 'package:com_flutter_client/com_flutter_client.dart';
-import 'package:example/service/provider/applink_client.dart';
-import 'package:example/service/provider/service_provider.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -55,9 +54,7 @@ class _MyHomeState extends State<MyHome> {
     super.initState();
   }
 
-  PingService get ping => PingService(com: com);
-
-  ApplinkService get backlink => ApplinkService(com: com);
+  BacklinkService get backlink => const BacklinkService();
 
   void _incrementCounter() {
     setState(() {
@@ -69,12 +66,13 @@ class _MyHomeState extends State<MyHome> {
     });
   }
 
-  void _ping() async {
+  void _pingBacklink() async {
     //setState(() => _task = null);
     //await Future<void>.delayed(const Duration(seconds: 1));
     final now1 = DateTime.now().millisecondsSinceEpoch;
     setState(() {
-      _task = ping.ping.request(fields: [ping.ping.msServer]);
+      _task = BacklinkService.applink.millisecondOnServer.getTask();
+      com.sendRequest(_task!);
     });
     if (_task == null) return;
     final ms = await _task!.getField('millisecondOnServer');
@@ -94,31 +92,9 @@ class _MyHomeState extends State<MyHome> {
     // setState(() => _counter = msServer);
   }
 
-  void _basicApplink() async {
-    final now1 = DateTime.now().millisecondsSinceEpoch;
-    setState(() {
-      _task = backlink.applink.msServer.request();
-    });
-    if (_task == null) return;
-    final ms = await _task!.getField('millisecondOnServer');
-    final now2 = DateTime.now().millisecondsSinceEpoch;
-    final msServer = int.tryParse('${ms.value}');
-    Message.log(
-      title: 'Ping: {ms}ms',
-      templateValues: {'ms': '$msServer'},
-    );
-    if (msServer is int) {
-      Message.warning(
-        title: 'Ping: {ms}ms / {ms2}ms',
-        templateValues: {'ms': '${now2 - now1}', 'ms2': '${msServer - now1}'},
-      );
-      _counter = msServer;
-    }
-  }
-
   Future<void> _pingRepeat() async {
     for (var i = 0; i < 1024; i++) {
-      _ping();
+      _pingBacklink();
       await Future<void>.delayed(const Duration(milliseconds: 8));
     }
   }
@@ -142,11 +118,7 @@ class _MyHomeState extends State<MyHome> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             TextButton(
-              onPressed: _ping,
-              child: const Text('Test Ping'),
-            ),
-            TextButton(
-              onPressed: _basicApplink,
+              onPressed: _pingBacklink,
               child: const Text('Test Backlink'),
             ),
             TextButton(

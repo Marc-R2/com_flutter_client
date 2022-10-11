@@ -34,11 +34,11 @@ abstract class DynamicPage extends StatelessWidget {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
     final routes = <String, PageBuilder>{};
     _buildRoutes(additional).forEach((key, value) {
-      print('Adding route: /:lang$key => $value');
+      // print('Adding route: /:lang$key => $value');
       final page = BeamPage(
         key: ValueKey('$key-?@?-$time'),
         type: value.transition,
-        child: value,
+        child: DebugPathInfo(child: value),
       );
       routes['/:lang$key'] = (context, state, data) => page;
     });
@@ -47,10 +47,10 @@ abstract class DynamicPage extends StatelessWidget {
           type: transition,
           child: WillPopScope(
             onWillPop: () => onPopMainPage(context),
-            child: this,
+            child: DebugPathInfo(child: this),
           ),
         );
-    print('Routes: $routes');
+    // print('Routes: $routes');
     return routes;
   }
 

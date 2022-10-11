@@ -1,6 +1,7 @@
 library com_flutter_client;
 
 import 'package:com_flutter_client/com_flutter_client.dart';
+import 'package:com_flutter_client/util/debug_path_info.dart';
 import 'package:com_flutter_client/util/pill_select.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,8 @@ extension WidgetData on Widget {
 
 // Extend the BuildContext class with language getter
 extension BuildContextLanguage on BuildContext {
+  Uri? get uri => beamState?.uri;
+
   BeamState? get beamState {
     try {
       return Beamer.of(this).currentBeamLocation.state as BeamState?;

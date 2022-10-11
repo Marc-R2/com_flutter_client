@@ -33,6 +33,12 @@ class DebugPage extends SettingsChildPage {
             leading: const Icon(Icons.code),
             onTap: () => context.beamToChild('console'),
           ),
+          /*SwitchListTile(
+            value: DebugPathInfo.disableDebug,
+            onChanged: (value) {
+              DebugPathInfo.disableDebug = value;
+            },
+          ),*/
         ],
       ),
     );
