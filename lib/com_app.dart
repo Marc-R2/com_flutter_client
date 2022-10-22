@@ -6,7 +6,14 @@ class COMApp extends StatelessWidget {
     required this.homePage,
     this.errorPage,
     this.initLang = 'en',
-  });
+    required String appName,
+    required String appVersion,
+    List<Developer>? appDevelopers,
+  }) {
+    COMApp.appName = appName;
+    COMApp.appVersion = appVersion;
+    if (appDevelopers != null) COMApp.appDevelopers = appDevelopers;
+  }
 
   final DynamicPage homePage;
 
@@ -15,6 +22,12 @@ class COMApp extends StatelessWidget {
   final String initLang;
 
   late BeamerDelegate routerDelegate = _routerDelegate;
+
+  static String appName = 'ComFlutterClient';
+
+  static String appVersion = '-1';
+
+  static List<Developer> appDevelopers = [Developer.MarcRenken()];
 
   BeamerDelegate get _routerDelegate {
     final internalPages = <String, DynamicPage>{
@@ -26,7 +39,7 @@ class COMApp extends StatelessWidget {
       initialPath: '/$initLang',
       notFoundPage: BeamPage(
         key: const ValueKey('404'),
-        child: errorPage ?? const ErrorPage(),
+        child: DebugPathInfo(child: errorPage ?? const ErrorPage()),
       ),
       routeListener: (context, state) {
         Message.trace(

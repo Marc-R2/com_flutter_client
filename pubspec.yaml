@@ -17,6 +17,7 @@ dependencies:
     #   url: https://github.com/Marc-R2/com_client.git
   flutter:
     sdk: flutter
+  shared_preferences: ^2.0.6
   wakelock: ^0.6.2
 
 dev_dependencies:

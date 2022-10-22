@@ -6,6 +6,7 @@ class DebugPage extends SettingsChildPage {
   @override
   Map<String, DynamicPage> get pages => {
         'console': const InteractiveConsolePage(),
+        'server': const ServerDebugPage(),
       };
 
   @override
@@ -39,6 +40,12 @@ class DebugPage extends SettingsChildPage {
               DebugPathInfo.disableDebug = value;
             },
           ),*/
+          ListTile(
+            title: const Text('Server'),
+            // subtitle: const Text(''),
+            leading: const Icon(Icons.network_check),
+            onTap: () => context.beamToChild('server'),
+          ),
         ],
       ),
     );

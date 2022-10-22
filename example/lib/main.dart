@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 
 void main() {
   Message.info(title: 'App is starting');
-  runApp(COMApp(homePage: const MyHomePage()));
+  runApp(
+    COMApp(
+      appName: 'TestApp',
+      appVersion: '0.0.1',
+      homePage: const MyHomePage(),
+    ),
+  );
 }
 
 class MyHomePage extends DynamicPage {

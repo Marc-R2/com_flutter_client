@@ -41,11 +41,13 @@ part 'settings/privacy/privacy_page.dart';
 
 part 'settings/debug/console/interactive_console.dart';
 
-part 'settings/debug/console/log_console.dart';
+part 'settings/debug/console/log_console_page.dart';
 
 part 'settings/debug/console/log_message.dart';
 
 part 'settings/debug/debug_page.dart';
+
+part 'settings/debug/server/server_page.dart';
 
 part 'settings/settings_page.dart';
 
@@ -60,6 +62,8 @@ part 'task/task_request_scope.dart';
 part 'util/back_button.dart';
 
 part 'util/home_button.dart';
+
+part 'util/developer.dart';
 
 part 'util/settings_button.dart';
 

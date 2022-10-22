@@ -16,14 +16,38 @@ class DebugPathInfo extends StatelessWidget {
       child: Material(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(context.uri.toString()),
+            const Padding(
+              padding: EdgeInsets.all(8),
+              child: DebugUriNavigationBar(),
             ),
             Expanded(child: child),
           ],
         ),
       ),
+    );
+  }
+}
+
+class DebugUriNavigationBar extends StatelessWidget {
+  const DebugUriNavigationBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final uri = context.uri;
+    if (uri == null) return const SizedBox();
+    return Row(
+      children: [
+        ...uri.pathSegments.map((segment) {
+          // Simple Button to beam to the path till the segment
+          final path = uri.pathSegments
+              .sublist(0, uri.pathSegments.indexOf(segment) + 1).join('/');
+          print(path);
+          return TextButton(
+            onPressed: () => context.beamToNamed('/$path'),
+            child: Text('/$segment'),
+          );
+        }),
+      ],
     );
   }
 }
