@@ -1,17 +1,18 @@
 part of '../com_flutter_client.dart';
 
 class LocalText extends StatelessWidget {
-  const LocalText({
-    required this.id,
-    required this.en,
+  const LocalText(this.ident, {
+    this.oj,
+    this.en,
     this.de,
     this.fallbackLanguage = 'en',
     super.key,
   });
 
-  final String id;
+  final String ident;
 
-  final String en;
+  final String? oj;
+  final String? en;
   final String? de;
 
   final String fallbackLanguage;
@@ -20,7 +21,11 @@ class LocalText extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.lang;
     return Text(
-      lang == 'en' ? en : de ?? en,
+      (lang == 'en' ? en : (de ?? en)) ?? oj ?? ident,
     );
   }
+}
+
+extension LocalTextExtension on Text {
+  LocalText local(String ident) => LocalText(ident, oj: data);
 }
