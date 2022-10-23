@@ -40,9 +40,62 @@ class AboutPage extends SettingsChildPage {
             title: const Text('Version:'),
             trailing: Text(COMApp.appVersion),
           ),
-          ListTile(
-            title: const Text('Current Time:'),
-            trailing: Text(DateTime.now().toString()),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    title: const Text('Current Time:'),
+                    trailing: SizedBox(
+                      width: constraints.maxWidth * 0.5,
+                      child: Text(
+                        DateTime.now().toString(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('DeviceKey:'),
+                    trailing: SizedBox(
+                      width: constraints.maxWidth * 0.5,
+                      child: Text(
+                        Device.deviceKey ?? 'null',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('DeviceID:'),
+                    trailing: SizedBox(
+                      width: constraints.maxWidth * 0.5,
+                      child: Text(
+                        Device.deviceID ?? 'null',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('SessionKey:'),
+                    trailing: SizedBox(
+                      width: constraints.maxWidth * 0.5,
+                      child: Text(
+                        Device.sessionKey ?? 'null',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
           const ListTile(
             title: Text('Published by:'),
@@ -67,9 +120,9 @@ class AboutPage extends SettingsChildPage {
             ),
           ),
           const Divider(),
-          const Text(
-            'This App was created by:',
-            textAlign: TextAlign.center,
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Text('This App was created by:'),
           ),
           ...COMApp.appDevelopers.map(
             (author) => ListTile(

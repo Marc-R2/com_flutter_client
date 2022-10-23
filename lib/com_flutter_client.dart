@@ -1,5 +1,6 @@
 library com_flutter_client;
 
+import 'package:com_flutter_client/auth/device.dart';
 import 'package:com_flutter_client/com_flutter_client.dart';
 import 'package:com_flutter_client/util/debug_path_info.dart';
 import 'package:com_flutter_client/util/pill_select.dart';

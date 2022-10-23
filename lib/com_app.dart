@@ -12,7 +12,7 @@ class COMApp extends StatelessWidget {
   }) {
     COMApp.appName = appName;
     COMApp.appVersion = appVersion;
-    if (appDevelopers != null) COMApp.appDevelopers = appDevelopers;
+    if (appDevelopers != null) COMApp.appDevelopers.addAll(appDevelopers);
   }
 
   final DynamicPage homePage;
