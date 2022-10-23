@@ -11,6 +11,8 @@ environment:
 
 dependencies:
   beamer: ^1.5.3
+  com_auth_service_dart:
+    path: ../com_auth_service_dart
   com_client:
     path: ../com_client
     # git:

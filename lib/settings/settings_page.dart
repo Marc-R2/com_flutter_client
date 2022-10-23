@@ -31,18 +31,24 @@ class SettingsPage extends DynamicPage {
         title: const Text('Settings'),
         actions: const [GoHomeIcon()],
       ),
-      body: ListView.builder(
-        itemCount: pages.length,
-        itemBuilder: (context, index) {
-          final key = pages.keys.elementAt(index);
-          final page = pages[key]!;
-          return ListTile(
-            title: page.overviewTitle,
-            subtitle: page.overviewSubtitle,
-            leading: page.overviewIcon,
-            onTap: () => _beamToChild(context, key),
+      body: DataBuilder(
+        data: DebugPage.showDebug,
+        builder: (context, snapshot) {
+          return ListView.builder(
+            itemCount: pages.length,
+            itemBuilder: (context, index) {
+              final key = pages.keys.elementAt(index);
+              final page = pages[key]!;
+              if (!page.showInOverview) return const SizedBox();
+              return ListTile(
+                title: page.overviewTitle,
+                subtitle: page.overviewSubtitle,
+                leading: page.overviewIcon,
+                onTap: () => _beamToChild(context, key),
+              );
+            },
           );
-        },
+        }
       ),
     );
   }

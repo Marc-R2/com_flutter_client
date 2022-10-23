@@ -19,6 +19,10 @@ class AboutPage extends SettingsChildPage {
 
   void _pressForDebug() {
     _debugPressCounter++;
+    if (_debugPressCounter >= 8) {
+      DebugPage.showDebug.value = !DebugPage.showDebug.value;
+      _debugPressCounter = 0;
+    }
     print(_debugPressCounter);
   }
 
@@ -77,10 +81,20 @@ class AboutPage extends SettingsChildPage {
           const Divider(),
           TextButton(
             onPressed: _pressForDebug,
-            child: const Text(
-              'This App is based on com_flutter_client by Marc Renken @BitBot UG',
-              textAlign: TextAlign.center,
-            ),
+            child: DataBuilder(
+                data: DebugPage.showDebug,
+                builder: (context, snapshot) {
+                  return Text(
+                    'This App is based on com_flutter_client '
+                    'by Marc Renken @BitBot UG',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: DebugPage.showDebug.value
+                          ? Colors.green
+                          : Colors.blue,
+                    ),
+                  );
+                }),
           ),
         ],
       ),

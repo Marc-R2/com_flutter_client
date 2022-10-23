@@ -7,8 +7,16 @@ abstract class SharedData<T> extends GlobalData<T> {
     required super.key,
     required this.initValue,
   }) : super.withoutValue() {
-    _loadValue().then((value) => this.value = value);
+    super.value = initValue;
+    init = _loadValue().then((value) {
+      super.value = value;
+      _isReady = true;
+    });
   }
+
+  late final Future<void> init;
+
+  bool _isReady = false;
 
   /// The initial value of the [SharedData].
   final T initValue;
@@ -23,8 +31,10 @@ abstract class SharedData<T> extends GlobalData<T> {
   /// [force] can be used to force the value to be set in global data even if
   /// setting the value in [SharedPreferences] fails.
   Future<bool> setValue(T value, {bool force = false}) async {
+    print('setValue: $value in $key (T: $T)');
+    if (force) super.value = value;
     final result = await _saveValue(value);
-    if (result || force) this.value = value;
+    if (result && !force) super.value = value;
     if (!result) {
       Message.warning(
         title: 'Failed to save data',
@@ -42,6 +52,9 @@ abstract class SharedData<T> extends GlobalData<T> {
 
   @override
   set value(T value) => setValue(value, force: true);
+
+  @override
+  T get value => _isReady ? super.value : initValue;
 
   Future<bool> _saveValue(T value);
 

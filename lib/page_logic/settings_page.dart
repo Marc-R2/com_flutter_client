@@ -8,4 +8,6 @@ abstract class SettingsChildPage extends DynamicPage {
   Widget? get overviewSubtitle;
 
   Icon get overviewIcon;
+
+  bool get showInOverview => true;
 }
