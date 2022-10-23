@@ -27,7 +27,7 @@ class _DataBuilderState<T> extends State<DataBuilder<T>> {
   }
 
   void update(T data) {
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override

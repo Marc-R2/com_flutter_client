@@ -13,13 +13,7 @@ export 'package:com_client/com_client.dart';
 
 part 'com_app.dart';
 
-part 'globals/global_controller.dart';
-
-part 'globals/data_builder.dart';
-
-part 'globals/global_data.dart';
-
-part 'globals/global_listener.dart';
+part 'data/data_builder.dart';
 
 part 'local/local_text.dart';
 
