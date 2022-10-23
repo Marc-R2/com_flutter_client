@@ -6,6 +6,7 @@ import 'package:com_flutter_client/util/pill_select.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock/wakelock.dart';
 
 export 'package:beamer/beamer.dart';
@@ -14,6 +15,18 @@ export 'package:com_client/com_client.dart';
 part 'com_app.dart';
 
 part 'data/data_builder.dart';
+
+part 'data/shared_data.dart';
+
+part 'data/shared_data_string.dart';
+
+part 'data/shared_data_string_list.dart';
+
+part 'data/shared_data_int.dart';
+
+part 'data/shared_data_bool.dart';
+
+part 'data/shared_data_double.dart';
 
 part 'local/local_text.dart';
 

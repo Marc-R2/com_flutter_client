@@ -1,10 +1,26 @@
 part of '../com_flutter_client.dart';
 
+/// Flutter Widget Builder for [GlobalData].
+///
+/// [DataBuilder] is used to build a widget based on a [GlobalData].
+///
+/// the [builder] function is called when the [GlobalData] changes.
 class DataBuilder<T> extends StatefulWidget {
-  const DataBuilder({super.key, required this.data, required this.builder});
+  /// Creates a [DataBuilder] that builds a widget based on a [GlobalData].
+  ///
+  /// [builder] is the function that is called when the [GlobalData] changes.
+  ///
+  /// [data] is the [GlobalData] that is listened to.
+  const DataBuilder({
+    super.key,
+    required this.data,
+    required this.builder,
+  });
 
+  /// The [GlobalData] that this [DataBuilder] listens to.
   final GlobalData<T> data;
 
+  /// The function that is called when the [GlobalData] changes.
   final Widget Function(BuildContext context, T data) builder;
 
   @override
