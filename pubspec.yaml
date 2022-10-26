@@ -12,11 +12,13 @@ environment:
 dependencies:
   beamer: ^1.5.3
   com_auth_service_dart:
-    path: ../com_auth_service_dart
+    # path: ../com_auth_service_dart
+    git:
+      url: https://github.com/Marc-R2/com_auth_service_dart.git
   com_client:
-    path: ../com_client
-    # git:
-    #   url: https://github.com/Marc-R2/com_client.git
+    # path: ../com_client
+    git:
+      url: https://github.com/Marc-R2/com_client.git
   flutter:
     sdk: flutter
   shared_preferences: ^2.0.6
