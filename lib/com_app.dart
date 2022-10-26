@@ -29,6 +29,8 @@ class COMApp extends StatelessWidget {
 
   static List<Developer> appDevelopers = [Developer.MarcRenken()];
 
+  static final uri = GlobalData.nullable<String>();
+
   BeamerDelegate get _routerDelegate {
     final internalPages = <String, DynamicPage>{
       'settings': const SettingsPage(),
@@ -42,11 +44,12 @@ class COMApp extends StatelessWidget {
         child: DebugPathInfo(child: errorPage ?? const ErrorPage()),
       ),
       routeListener: (context, state) {
+        uri.value = context.location;
         Message.trace(
           title: 'Switch Page',
           text: 'New location is {path}',
           log: true,
-          templateValues: {'path': context.location ?? 'unknown'},
+          templateValues: {'path': uri.value ?? 'unknown'},
         );
       },
       locationBuilder: RoutesLocationBuilder(
