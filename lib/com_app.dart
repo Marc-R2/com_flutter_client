@@ -9,11 +9,14 @@ class COMApp extends StatelessWidget {
     required String appName,
     required String appVersion,
     List<Developer>? appDevelopers,
+    this.wakelock = false,
   }) {
     COMApp.appName = appName;
     COMApp.appVersion = appVersion;
     if (appDevelopers != null) COMApp.appDevelopers.addAll(appDevelopers);
   }
+
+  final bool wakelock;
 
   final DynamicPage homePage;
 
@@ -63,7 +66,7 @@ class COMApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // If app is in debug mode
-    if (kDebugMode) {
+    if (kDebugMode || wakelock) {
       Wakelock.enable();
       Message.warning(title: 'Wakelock enabled');
     }
