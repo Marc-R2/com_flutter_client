@@ -66,7 +66,7 @@ class COMApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // If app is in debug mode
-    if (kDebugMode || wakelock) {
+    if ((kDebugMode || wakelock) && !kIsWeb) {
       Wakelock.enable();
       Message.warning(title: 'Wakelock enabled');
     }
