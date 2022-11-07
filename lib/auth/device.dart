@@ -1,4 +1,4 @@
-import 'package:com_auth_service_dart/com_auth_service_dart.dart';
+import 'package:com_client/services/com_auth_service.dart';
 import 'package:com_flutter_client/com_flutter_client.dart';
 
 class Device {
@@ -32,7 +32,7 @@ class Device {
 
   Future<void> _getDeviceID() async {
     final res = await ComClient.answer(
-      AuthService.device.registerDevice,
+      PublicDeviceTask.registerDevice,
       data: {'deviceKey': _deviceKey.value},
     );
     if (res.status == 2 && res.value != null) {
@@ -42,7 +42,7 @@ class Device {
 
   Future<void> _getSessionKey() async {
     final res = await ComClient.answer(
-      AuthService.device.createSession,
+      PublicDeviceTask.createSession,
       data: {'deviceKey': _deviceKey.value, 'deviceID': _deviceID.value},
     );
     if (res.status == 2 && res.value != null) {
