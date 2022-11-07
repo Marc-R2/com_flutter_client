@@ -42,7 +42,7 @@ class FieldBuilder extends StatelessWidget {
       future: fieldTask,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          final data = snapshot.data!;
+          final data = snapshot.data! as TaskAnswer;
           if ((data.value == null || data.valueType == 'empty') &&
               onNull != null) return onNull!;
           if (data.status != 2 && onError != null) return onError!;
