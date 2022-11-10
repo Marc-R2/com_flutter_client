@@ -1,4 +1,3 @@
-import 'package:backlink_service_dart/backlink_service_dart.dart';
 import 'package:com_flutter_client/com_flutter_client.dart';
 import 'package:flutter/material.dart';
 
@@ -60,8 +59,6 @@ class _MyHomeState extends State<MyHome> {
     super.initState();
   }
 
-  BacklinkService get backlink => const BacklinkService();
-
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -77,7 +74,8 @@ class _MyHomeState extends State<MyHome> {
     //await Future<void>.delayed(const Duration(seconds: 1));
     final now1 = DateTime.now().millisecondsSinceEpoch;
     setState(() {
-      _task = BacklinkService.applink.millisecondOnServer.getTask();
+      // TODO(Marc-R2): Find a new test task
+      // _task = BacklinkService.applink.millisecondOnServer.getTask();
       com.sendRequest(_task!);
     });
     if (_task == null) return;

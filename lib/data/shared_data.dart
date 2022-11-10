@@ -14,6 +14,8 @@ abstract class SharedData<T> extends GlobalData<T> {
     });
   }
 
+  /// The Future that is completed when the value is loaded from
+  /// [SharedPreferences]. (Init is completed)
   late final Future<void> init;
 
   bool _isReady = false;
@@ -30,10 +32,14 @@ abstract class SharedData<T> extends GlobalData<T> {
   ///
   /// [force] can be used to force the value to be set in global data even if
   /// setting the value in [SharedPreferences] fails.
-  Future<bool> setValue(T value, {bool force = false}) async {
-    if (force) super.value = value;
+  Future<bool> setSharedValue(
+    T value, {
+    bool force = false,
+    bool notify = true,
+  }) async {
+    if (force) setValue(value, notify: notify);
     final result = await _saveValue(value);
-    if (result && !force) super.value = value;
+    if (result && !force) setValue(value, notify: notify);
     if (!result) {
       Message.warning(
         title: 'Failed to save data',
@@ -50,7 +56,7 @@ abstract class SharedData<T> extends GlobalData<T> {
   }
 
   @override
-  set value(T value) => setValue(value, force: true);
+  set value(T value) => setSharedValue(value, force: true);
 
   @override
   T get value => _isReady ? super.value : initValue;

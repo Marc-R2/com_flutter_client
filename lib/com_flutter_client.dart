@@ -17,6 +17,8 @@ part 'com_app.dart';
 
 part 'data/data_builder.dart';
 
+part 'data/joined_data_builder.dart';
+
 part 'data/shared_data.dart';
 
 part 'data/shared_data_string.dart';
@@ -27,7 +29,9 @@ part 'data/shared_data_int.dart';
 
 part 'data/shared_data_bool.dart';
 
-part 'data/shared_data_double.dart';
+part 'data/shared_data_double.dart'
+;
+part 'extension/build_context_language.dart';
 
 part 'local/local_text.dart';
 
@@ -82,75 +86,3 @@ part 'util/home_button.dart';
 part 'util/developer.dart';
 
 part 'util/settings_button.dart';
-
-extension WidgetData on Widget {
-  static Map<Widget, Map<String, dynamic>> _pageData = {};
-
-  static Map<String, dynamic> _globalData = {};
-
-  static dynamic getGlobalData(String key) => _globalData[key];
-
-  static void setGlobalData(String key, dynamic value) =>
-      _globalData[key] = value;
-
-  Map<String, dynamic> get data => _pageData[this] ??= {};
-
-  dynamic getData(String key) => data[key];
-}
-
-// Extend the BuildContext class with language getter
-extension BuildContextLanguage on BuildContext {
-  Uri? get uri => beamState?.uri;
-
-  BeamState? get beamState {
-    try {
-      return Beamer.of(this).currentBeamLocation.state as BeamState?;
-    } catch (e, trace) {
-      Message.error(
-        title: 'Error getting BeamState',
-        text: '$e',
-        stackTrace: trace,
-      );
-      return null;
-    }
-  }
-
-  String get lang {
-    try {
-      if (beamState != null && beamState!.pathParameters.containsKey('lang')) {
-        return beamState!.pathParameters['lang']!;
-      } else {
-        Message.info(
-          title: 'No language found',
-          text: 'Using default (en)',
-        );
-      }
-    } catch (e, trace) {
-      Message.warning(
-        title: 'Error getting language',
-        text: '$e',
-        stackTrace: trace,
-      );
-    }
-    return 'en';
-  }
-
-  void _beamToRaw(String path) {
-    try {
-      Beamer.of(this).beamToNamed(path);
-    } catch (e, trace) {
-      Message.error(
-        title: 'Error beaming to $path',
-        text: '$e',
-        stackTrace: trace,
-      );
-    }
-  }
-
-  void beamTo(String path) => _beamToRaw('/$lang/$path');
-
-  void beamToChild(String path) {
-    final newUri = '${beamState!.uri}/$path';
-    _beamToRaw(newUri);
-  }
-}
