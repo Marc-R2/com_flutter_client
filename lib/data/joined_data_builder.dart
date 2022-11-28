@@ -4,7 +4,8 @@ part of '../com_flutter_client.dart';
 ///
 /// [JoinedDataBuilder] is used to build a widget based on a [GlobalData].
 ///
-/// the [builder] function is called when the [GlobalData] changes.
+/// The [builder] function is called when the [GlobalData] changes.
+/// The value in builder is the value of latest [GlobalData] from [data].
 class JoinedDataBuilder<T> extends StatefulWidget {
   /// Creates a [JoinedDataBuilder] that builds a widget based on [GlobalData]s.
   ///
@@ -21,6 +22,8 @@ class JoinedDataBuilder<T> extends StatefulWidget {
   final List<GlobalData<T>> data;
 
   /// The function that is called when the [GlobalData] changes.
+  ///
+  /// The value in builder is the value of latest [GlobalData] from [data].
   final Widget Function(BuildContext context, T? data) builder;
 
   @override
