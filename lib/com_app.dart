@@ -1,11 +1,14 @@
 part of 'com_flutter_client.dart';
 
+/// The startpoint for any COM-Application.
 class COMApp extends StatelessWidget {
+  /// The startpoint for any COM-Application.
   COMApp({
     super.key,
     required this.homePage,
     this.errorPage,
     this.initLang = 'en',
+    this.themeMode = ThemeMode.system,
     required String appName,
     required String appVersion,
     List<Developer>? appDevelopers,
@@ -16,22 +19,34 @@ class COMApp extends StatelessWidget {
     if (appDevelopers != null) COMApp.appDevelopers.addAll(appDevelopers);
   }
 
+  /// The default [ThemeMode] for the app.
+  final ThemeMode themeMode;
+
+  /// Whether to keep the device awake by default.
   final bool wakelock;
 
+  /// The first page to show.
   final DynamicPage homePage;
 
+  /// The page to show if an error occurs.
   final Widget? errorPage;
 
+  /// The initial language to use.
   final String initLang;
 
+  /// The router responsible for routing the pages.
   late BeamerDelegate routerDelegate = _routerDelegate;
 
+  /// The name of the app.
   static String appName = 'ComFlutterClient';
 
+  /// The version of the app.
   static String appVersion = '-1';
 
-  static List<Developer> appDevelopers = [Developer.MarcRenken()];
+  /// The developers of the app.
+  static List<Developer> appDevelopers = [const Developer.MarcRenken()];
 
+  /// The uri in a [GlobalData] object.
   static final uri = GlobalData.nullable<String>();
 
   BeamerDelegate get _routerDelegate {
@@ -73,6 +88,8 @@ class COMApp extends StatelessWidget {
 
     // routerDelegate = _routerDelegate;
     return MaterialApp.router(
+      themeMode: themeMode,
+      darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       routeInformationParser: BeamerParser(),
       routerDelegate: routerDelegate,
