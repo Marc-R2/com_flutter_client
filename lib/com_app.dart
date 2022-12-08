@@ -13,6 +13,7 @@ class COMApp extends StatelessWidget {
     required String appVersion,
     List<Developer>? appDevelopers,
     this.wakelock = false,
+    this.theme,
   }) {
     COMApp.appName = appName;
     COMApp.appVersion = appVersion;
@@ -33,6 +34,9 @@ class COMApp extends StatelessWidget {
 
   /// The initial language to use.
   final String initLang;
+
+  /// The theme of the app.
+  final ThemeData? theme;
 
   /// The router responsible for routing the pages.
   late BeamerDelegate routerDelegate = _routerDelegate;
@@ -89,6 +93,7 @@ class COMApp extends StatelessWidget {
     // routerDelegate = _routerDelegate;
     return MaterialApp.router(
       themeMode: themeMode,
+      theme: theme,
       darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       routeInformationParser: BeamerParser(),
