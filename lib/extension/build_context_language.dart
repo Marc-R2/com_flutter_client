@@ -55,6 +55,9 @@ extension BuildContextLanguage on BuildContext {
   /// Beam to a new page
   void beamTo(String path) => _beamToRaw('/$lang/$path');
 
+  /// Beam to a new page (alternative to [beamTo])
+  void beam(String path) => beamTo(path);
+
   /// Beam to a child page
   void beamToChild(String path) {
     final newUri = '${beamState!.uri}/$path';
